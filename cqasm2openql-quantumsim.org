@@ -1,0 +1,33 @@
+#+TITLE: cQASM to OpenQL and quantumsim
+#+AUTHOR: Daniel Moreno Manzano
+
+#+LATEX_HEADER: \usepackage{geometry}
+#+LATEX_HEADER: \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+
+* Missing features
+
+#+caption: 
+#+NAME: tab:
+#+ATTR_LATEX: :booktabs :environment :font \small :width \textwidth :float t :align |p{2cm}|p{2cm}|p{3cm}|p{3cm}|
+|----------------------------+--------------------------------+-----------------------------------------------+--------------------------------------------------|
+|                            | OpenQL translation             | quantumsim translation                        | Notes                                            |
+|----------------------------+--------------------------------+-----------------------------------------------+--------------------------------------------------|
+|                            |                                |                                               |                                                  |
+| Gates                      |                                | - ~ Bit controlled and classical operations   | The name of the controlled gates is not accurate |
+|                            |                                | - ~ Measurement                               | Is storing the measurement in a variable?        |
+|                            |                                | - s                                           |                                                  |
+|                            |                                | - Measure parity                              |                                                  |
+|                            |                                | - Control Phase Rotation ($\pi/2^k$) CRK gate |                                                  |
+|                            |                                | - Prep_x, Prep_y, measure_x, measure_y        |                                                  |
+|                            |                                | - measure_all                                 |                                                  |
+|                            |                                | - toffoli                                     |                                                  |
+|                            |                                |                                               |                                                  |
+| Scheduling information     | No                             | Yes                                           |                                                  |
+|                            |                                |                                               |                                                  |
+| Add measurement in the end | Not needed (done in the cQASM) | Yes                                           |                                                  |
+|                            |                                |                                               |                                                  |
+| Initial state control      | Not needed (done in the cQASM) | Yes                                           |                                                  |
+|----------------------------+--------------------------------+-----------------------------------------------+--------------------------------------------------|
+
+

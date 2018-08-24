@@ -6,7 +6,7 @@
 
 const int cycle_t = 20;
 int t = 0;
-// int num_qubits = 0;
+int num_qubits = 0;
 
 int writeQuantumsimCode(compiler::QasmRepresentation& qasm_representation, const std::string& quantumsim_file_name);
 int replace(std::string& str, const std::string& from, const std::string& to);
@@ -154,10 +154,14 @@ void writeCircuit(std::ofstream& quantumsim_file, compiler::QasmRepresentation& 
 {
 
   const std::vector<compiler::SubCircuit>& found_subcircuits = qasm_representation.getSubCircuits().getAllSubCircuits();
-  int num_qubits = qasm_representation.numQubits();
+  num_qubits = qasm_representation.numQubits();
 
   quantumsim_file << "    c = Circuit(title='" << found_subcircuits[0].nameSubCircuit() << "')\n\n";
-  
+
+  for (int q = 0; q < num_qubits; q++){
+      quantumsim_file << "    c.add_gate(ResetGate('q" << q << "', time=1, state=int(init_state[" << q << "])))\n";
+    }
+
   for (int q = 0; q < num_qubits; q++){
       quantumsim_file << "    c.add_qubit('q" << q << "', q_t1, q_t2)\n";
     }
@@ -168,11 +172,7 @@ void writeCircuit(std::ofstream& quantumsim_file, compiler::QasmRepresentation& 
 
     for (int q = 0; q < num_qubits; q++){
       quantumsim_file << "    subc.add_qubit('q" << q << "', q_t1, q_t2)\n";
-    }
-
-    // for (int q = 0; q < num_qubits; q++){
-    //   quantumsim_file << "    c.add_gate(ResetGate('q" << q << "', time=1, state=int(init_state[" << q << "])))\n";
-    // }
+    }   
   
     writeSubCircuit(quantumsim_file, subcircuit);
 
@@ -193,8 +193,8 @@ void writeCircuit(std::ofstream& quantumsim_file, compiler::QasmRepresentation& 
 void writeSubCircuit(std::ofstream& quantumsim_file, compiler::SubCircuit& subs)
 {		 
   for (auto elem : subs.getOperationsCluster()){
-    writeSerialParallelOperations(quantumsim_file, *elem);
     t = t + cycle_t;
+    writeSerialParallelOperations(quantumsim_file, *elem);
   }    
   
 }
@@ -381,12 +381,12 @@ void writeOperations(std::ofstream& quantumsim_file, compiler::Operation& op)
 void writeTail(std::ofstream& quantumsim_file)
 {
   // ADDING MEASUREMENT PER QUBIT, BUT THE TIMING IS NOT ACCURATE
-  // for (int q = 0; q < num_qubits; q++){
-  //   quantumsim_file << "    sampler = uniform_noisy_sampler(readout_error=0.03, seed=42)\n";
-  //   quantumsim_file << "    subc.add_qubit("m0")\n";
-  //   quantumsim_file << "    subc.add_measurement('q" << q << "', time=" << time << ", output_bit='m" << q << "', sampler=sampler)\n";
-  //   quantumsim_file << "\n";
-  // }
+  for (int q = 0; q < num_qubits; q++){
+    quantumsim_file << "    sampler = uniform_noisy_sampler(readout_error=0.03, seed=42)\n";
+    quantumsim_file << "    c.add_qubit('m" << q << "')\n";
+    quantumsim_file << "    c.add_measurement('q" << q << "', time=" << t << ", output_bit='m" << q << "', sampler=sampler)\n";
+    quantumsim_file << "\n";
+  }
   
   quantumsim_file << "\n    return c\n\n";
 }
