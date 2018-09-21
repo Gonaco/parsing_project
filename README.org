@@ -6,7 +6,6 @@
 ** Requirements
 
 - g++ compiler with C++11 support (Linux)
-- MSVC 2015 with update 3 or above (Windows)
 - cmake (>= 3.0)
 - swig
 - python (>= 3.5)
