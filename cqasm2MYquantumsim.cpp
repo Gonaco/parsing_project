@@ -138,10 +138,10 @@ void writeHeaders(std::ofstream& quantumsim_file)
   quantumsim_file << "def ry90(q, time):\n";
   quantumsim_file << "    return ry(q, time, angle=np.pi/2)\n";
   quantumsim_file << "\n";
-  quantumsim_file << "def mx90(q, time):\n";
+  quantumsim_file << "def xm90(q, time):\n";
   quantumsim_file << "    return rx(q, time, angle=-np.pi/2)\n";
   quantumsim_file << "\n";
-  quantumsim_file << "def my90(q, time):\n";
+  quantumsim_file << "def ym90(q, time):\n";
   quantumsim_file << "    return ry(q, time, angle=-np.pi/2)\n";
   quantumsim_file << "\n";
   quantumsim_file << "def rx45(q, time):\n";
@@ -152,7 +152,8 @@ void writeHeaders(std::ofstream& quantumsim_file)
   quantumsim_file << "\n";
   quantumsim_file << "def prep_z(q, time):\n";
   quantumsim_file << "    return ResetGate(q, time, state=0)\n\n";
-  quantumsim_file << "def circuit_function(q_t1=3000, q_t2=1500, error=0.01, init_state=''):\n\n";
+  // quantumsim_file << "def circuit_function(error=0.01, meas_error=0.03, init_state=''):\n\n";
+    quantumsim_file << "def circuit_function(q_t1=3000, q_t2=1500, error=0.01, meas_error=0.03, init_state=''):\n\n";
   
 }
 
